@@ -14,4 +14,34 @@
     <ant dir="src" target="checkout"/>
   </target>
 
+  <target name="test" depends="clean, prepare, phploc, pdepend"/>
+
+  <target name="clean">
+    <delete dir="build"/>
+  </target>
+
+  <target name="prepare">
+    <mkdir dir="build"/>
+    <mkdir dir="build/logs"/>
+    <mkdir dir="build/pdepend"/>
+    <mkdir dir="build/coverage"/>
+  </target>
+
+  <target name="phploc">
+    <exec executable="phploc">
+      <arg value="--log-csv" />
+      <arg value="${basedir}/build/logs/phploc.csv"/>
+      <arg value="${basedir}/src/lattice"/>   
+    </exec>
+  </target>
+
+  <target name="pdepend">
+    <exec executable="pdepend">
+      <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
+      <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
+      <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg"/>
+      <arg value="${basedir}/src/lattice"/>   
+    </exec>
+  </target>
+
 </project>
