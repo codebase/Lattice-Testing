@@ -22,7 +22,7 @@
     <ant dir="src" target="checkout"/>
   </target>
 
-  <target name="test" depends="clean, prepare, phploc, pdepend, phpdoc, phpcpd, phpmd"/>
+  <target name="test" depends="clean, prepare, lint,  phploc, pdepend, phpdoc, phpcpd, phpmd, phpcb"/>
 
   <target name="clean">
     <delete dir="build"/>
@@ -34,6 +34,7 @@
     <mkdir dir="build/pdepend"/>
     <mkdir dir="build/coverage"/>
     <mkdir dir="build/api"/>
+    <mkdir dir="build/code-browser"/>
   </target>
 
   <target name="phploc">
@@ -62,6 +63,17 @@
     </exec>
   </target>
 
+
+  <target name="phpcb">
+    <exec executable="phpcb">
+      <arg value="--log" />
+      <arg path="${basedir}/build/logs"/>
+      <arg value="--source"/>
+      <arg path="${basedir}/src/lattice"/>
+      <arg value="--output" />
+      <arg path="${basedir}/build/code-browser"/>
+    </exec>
+  </target>
   <target name="phpcpd">
     <exec executable="phpcpd">
       <arg value="--log-pmd"/>
@@ -89,5 +101,19 @@
       <arg value="${basedir}/build/logs/pmd.xml" />
     </exec>
   </target>
+
+ <target name="lint">
+  <apply executable="php" failonerror="true">
+   <arg value="-l" />
+
+   <fileset dir="${basedir}/src">
+    <include name="**/*.php" />
+   </fileset>
+
+   <fileset dir="${basedir}/tests">
+    <include name="**/*.php" />
+   </fileset>
+  </apply>
+ </target>
 
 </project>
