@@ -22,7 +22,7 @@
     <ant dir="src" target="checkout"/>
   </target>
 
-  <target name="test" depends="clean, prepare, lint,  phploc, pdepend, phpdoc, phpcpd, phpmd, phpcb"/>
+  <target name="test" depends="clean, prepare,  phploc, pdepend, phpdoc, phpcpd, phpmd, phpcb"/>
 
   <target name="clean">
     <delete dir="build"/>
