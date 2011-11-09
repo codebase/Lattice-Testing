@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset name="RuleSet">
+   <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
+   <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+   <rule ref="Generic.WhiteSpace.ScopeIndent"/>
+ </ruleset>

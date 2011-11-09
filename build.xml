@@ -22,7 +22,7 @@
     <ant dir="src" target="checkout"/>
   </target>
 
-  <target name="test" depends="clean, prepare, phploc, pdepend"/>
+  <target name="test" depends="clean, prepare, phploc, pdepend, phpdoc"/>
 
   <target name="clean">
     <delete dir="build"/>
@@ -33,6 +33,7 @@
     <mkdir dir="build/logs"/>
     <mkdir dir="build/pdepend"/>
     <mkdir dir="build/coverage"/>
+    <mkdir dir="build/api"/>
   </target>
 
   <target name="phploc">
@@ -49,6 +50,43 @@
       <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
       <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg"/>
       <arg value="${basedir}/src/lattice"/>   
+    </exec>
+  </target>
+
+  <target name="phpdoc">
+    <exec executable="phpdoc">
+      <arg value="--directory"/>
+      <arg path="${basedir}/src/lattice"/>
+      <arg value="--target" />
+      <arg path="${basedir}/build/api"/>
+    </exec>
+  </target>
+
+  <target name="phpcpd">
+    <exec executable="phpcpd">
+      <arg value="--log-pmd"/>
+      <arg value="${basedir}/build/logs/pmd-cpd.xml"/>
+      <arg path="${basedir}/src/lattice"/>
+    </exec>
+  </target>
+
+  <target name="phpcs">
+    <exec executable="phpcs" output="/dev/null">
+      <arg value="--report=checkstyle"/>
+      <arg value="--report-file=${basedir}/build/logs/checkstyle.xml"/>
+      <arg value="--standard=${basedir}/settings/phpcs.xml"/>
+      <arg path="${basedir}/src/lattic"/>
+    </exec>
+  </target>
+
+  <target name="phpmd"
+    description="Perform project mess detection using PHPMD">
+    <exec executable="phpmd">
+      <arg path="${basedir}/src/lattice/" />
+      <arg value="xml" />
+      <arg value="${basedir}/settings/phpmd.xml" />
+      <arg value="--reportfile" />
+      <arg value="${basedir}/build/logs/pmd.xml" />
     </exec>
   </target>
 
