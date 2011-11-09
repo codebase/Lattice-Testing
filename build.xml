@@ -2,7 +2,16 @@
 
 <project name="lattice testing" default="build">
 
-  <target name="build">
+  <target name="create">
+    <exec executable="git">
+      <arg value="submodule"/>
+      <arg value="init"/>
+    </exec>
+    <exec executable="git">
+      <arg value="submodule"/>
+      <arg value="update"/>
+    </exec>
+    <ant dir="src" target="checkout"/>
   </target>
 
 </project>
