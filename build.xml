@@ -22,10 +22,20 @@
     <ant dir="src" target="checkout"/>
   </target>
 
-  <target name="test" depends="clean, prepare, phploc, pdepend, phpdoc, phpcpd, phpmd"/>
+  <target name="test" depends="clean, pull, prepare,  phploc, pdepend, phpdoc, phpcpd, phpmd, phpcb"/>
 
   <target name="clean">
     <delete dir="build"/>
+  </target>
+
+  <target name="pull">
+    <exec executable="git" dir="lattice">
+      <arg value="checkout"/>
+      <arg value="master"/>
+    </exec>
+    <exec executable="git" dir="lattice">
+      <arg value="pull"/>
+    </exec>
   </target>
 
   <target name="prepare">
